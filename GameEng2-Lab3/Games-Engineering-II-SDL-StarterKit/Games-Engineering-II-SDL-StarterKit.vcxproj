@@ -138,32 +138,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectFactory.cpp" />
-    <ClCompile Include="GameObjectParameters.cpp" />
-    <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerFactory.cpp" />
-    <ClCompile Include="TileLayer.cpp" />
-    <ClCompile Include="TinyXML2.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectFactory.h" />
-    <ClInclude Include="GameObjectParameters.h" />
-    <ClInclude Include="Layer.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelParser.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerFactory.h" />
-    <ClInclude Include="TinyXML2.h" />
-    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
