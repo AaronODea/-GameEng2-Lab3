@@ -3,6 +3,7 @@
 #include <thread>
 
 
+
 using namespace std;
 
 Game::Game() : m_running(false)
@@ -56,6 +57,9 @@ bool Game::Initialize(const char* title, int xpos, int ypos, int width, int heig
 void Game::LoadContent()
 {
 	DEBUG_MSG("Loading Content");
+
+	image = IMG_Load("assets/sprite.bmp");
+
 	m_p_Surface = SDL_LoadBMP("assets/sprite.bmp");
 	m_p_Texture = SDL_CreateTextureFromSurface(m_p_Renderer, m_p_Surface);
 	SDL_FreeSurface(m_p_Surface);
@@ -77,6 +81,8 @@ void Game::LoadContent()
 		DEBUG_MSG("Texture Query Failed");
 		m_running = false;
 	}
+
+
 }
 
 void Game::Render()
@@ -85,9 +91,24 @@ void Game::Render()
 	DEBUG_MSG("Width Source" + m_Destination.w);
 	DEBUG_MSG("Width Destination" + m_Destination.w);
 
-	if(m_p_Renderer != nullptr && m_p_Texture != nullptr)
-		SDL_RenderCopy(m_p_Renderer, m_p_Texture, NULL, NULL);
+	//if(m_p_Renderer != nullptr && m_p_Texture != nullptr)
+	//	SDL_RenderCopy(m_p_Renderer, m_p_Texture, NULL, NULL);
+	//SDL_RenderPresent(m_p_Renderer);
+
+	texture = SDL_CreateTextureFromSurface(m_p_Renderer, image);
+
+
+	ticks = SDL_GetTicks();
+	sprite = (ticks / 100) % 3;
+	srcrect = { sprite * 32, 0, 32, 32 };
+	dstrect = { 40, 40, 128, 128};
+	
+	SDL_RenderClear(m_p_Renderer);
+	SDL_RenderCopy(m_p_Renderer, texture, &srcrect, &dstrect);
 	SDL_RenderPresent(m_p_Renderer);
+
+
+
 }
 
 void Game::Update()

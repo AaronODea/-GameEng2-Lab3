@@ -2,6 +2,9 @@
 #define GAME_H
 #include "Debug.h"
 #include <SDL.h>
+#include <SDL_image.h>
+#include <vector>
+
 
 class Game
 {
@@ -16,6 +19,8 @@ public:
 	void HandleEvents();
 	bool IsRunning();
 	void CleanUp();
+
+
 private:
 	bool m_running;
 	SDL_Window* m_p_Window;
@@ -24,6 +29,18 @@ private:
 	SDL_Rect m_Source;
 	SDL_Rect m_Destination;
 	SDL_Surface* m_p_Surface;
+
+
+
+	Uint32 ticks;
+	int sprite;
+
+	SDL_Rect srcrect;
+	SDL_Rect dstrect;
+
+
+	SDL_Surface* image;
+	SDL_Texture* texture;
 };
 #endif
 

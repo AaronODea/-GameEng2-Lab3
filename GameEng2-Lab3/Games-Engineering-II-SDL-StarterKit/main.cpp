@@ -3,6 +3,7 @@
 #include <string>
 
 
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -16,6 +17,7 @@ int main(int argc, char** argv){
 
 
 	Game* game = new Game();
+
 
 	//Adjust screen positions as needed
 	DEBUG_MSG("Game Initialising");
@@ -37,6 +39,8 @@ int main(int argc, char** argv){
 	game->CleanUp();
 	game->UnloadContent();
 	
+
+
 	return 0;
 }
 
