@@ -58,14 +58,15 @@ void Game::LoadContent()
 {
 	DEBUG_MSG("Loading Content");
 
-	image = IMG_Load("assets/sprite.bmp");
+	
 
-	m_p_Surface = SDL_LoadBMP("assets/sprite.bmp");
+	m_p_Surface = SDL_LoadBMP("assets/splunky.bmp");
 	m_p_Texture = SDL_CreateTextureFromSurface(m_p_Renderer, m_p_Surface);
 	SDL_FreeSurface(m_p_Surface);
 
 	if(SDL_QueryTexture(m_p_Texture, NULL, NULL, &m_Source.w, &m_Destination.h)==0)
 	{
+		
 		m_Destination.x = m_Source.x = 0;
 		m_Destination.y = m_Source.y = 0;
 		m_Destination.w = m_Source.w;
@@ -91,65 +92,71 @@ void Game::Render()
 	DEBUG_MSG("Width Source" + m_Destination.w);
 	DEBUG_MSG("Width Destination" + m_Destination.w);
 
-	//if(m_p_Renderer != nullptr && m_p_Texture != nullptr)
-	//	SDL_RenderCopy(m_p_Renderer, m_p_Texture, NULL, NULL);
-	//SDL_RenderPresent(m_p_Renderer);
-
-	texture = SDL_CreateTextureFromSurface(m_p_Renderer, image);
-
-
-	ticks = SDL_GetTicks();
-	sprite = (ticks / 100) % 3;
-	srcrect = { sprite * 32, 0, 32, 32 };
-	dstrect = { 40, 40, 128, 128};
-	
-	SDL_RenderClear(m_p_Renderer);
-	SDL_RenderCopy(m_p_Renderer, texture, &srcrect, &dstrect);
-	SDL_RenderPresent(m_p_Renderer);
-
-
+	if (m_p_Renderer != nullptr && m_p_Texture != nullptr)
+	{
+		SDL_RenderCopy(m_p_Renderer, m_p_Texture, &CurrentAnimation, &m_Destination);
+		SDL_RenderPresent(m_p_Renderer);
+	}
 
 }
 
 void Game::Update()
 {
+
 	//DEBUG_MSG("Updating....");
+
+	CurrentAnimation = fsm->GetAnimation();
+	fsm->update();
+	m_Destination = { 300, 250, 128, 128 }; // update size and location
+
 }
 
 void Game::HandleEvents()
 {
 	SDL_Event event;
 
-	while (SDL_PollEvent(&event))
+
+	if (SDL_PollEvent(&event))
 	{
-		switch(event.type)
-			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					m_running = false;
-					break;
-				case SDLK_UP:
-					DEBUG_MSG("Up Key Pressed");
-					SDL_SetRenderDrawColor(m_p_Renderer, 255, 0, 0, 255);
-					break;
-				case SDLK_DOWN:
-					DEBUG_MSG("Down Key Pressed");
-					SDL_SetRenderDrawColor(m_p_Renderer, 0, 255, 0, 255);
-					break;
-				case SDLK_LEFT:
-					DEBUG_MSG("Left Key Pressed");
-					SDL_SetRenderDrawColor(m_p_Renderer, 0, 0, 255, 255);
-					break;
-				case SDLK_RIGHT:
-					DEBUG_MSG("Right Key Pressed");
-					SDL_SetRenderDrawColor(m_p_Renderer, 255, 255, 255, 255);
-					break;
-				default:
-					SDL_SetRenderDrawColor(m_p_Renderer, 0, 0, 0, 255);
-					break;
-				}
+
+		switch (event.type)
+		{
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				m_running = false;
+				break;
+
+			case SDLK_UP:
+				DEBUG_MSG("Up Key Pressed");
+				fsm->CLIMB();
+				break;
+
+			case SDLK_DOWN:
+				DEBUG_MSG("Down Key Pressed");
+				fsm->DIE();
+
+				break;
+			case SDLK_LEFT:
+				DEBUG_MSG("Left Key Pressed");
+				fsm->WALKLEFT();
+				break;
+
+			case SDLK_RIGHT:
+				DEBUG_MSG("Right Key Pressed");
+				fsm->WALKRIGHT();
+				break;
+			default:
+				SDL_SetRenderDrawColor(m_p_Renderer, 0, 0, 0, 255);
+				break;
+			}
+		}
+		
 	}
+
+	
+
 }
 
 bool Game::IsRunning()

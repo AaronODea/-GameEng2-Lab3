@@ -17,7 +17,7 @@ int main(int argc, char** argv){
 
 
 	Game* game = new Game();
-
+	
 
 	//Adjust screen positions as needed
 	DEBUG_MSG("Game Initialising");

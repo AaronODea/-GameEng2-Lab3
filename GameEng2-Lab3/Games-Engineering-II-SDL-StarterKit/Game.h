@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
+#include <Fsm.h>
 
 
 class Game
@@ -11,6 +12,9 @@ class Game
 public:
 	Game();
 	~Game();
+
+	FSM* fsm = new FSM();
+
 	bool Initialize(const char*, int, int, int, int, int);
 	void LoadContent();
 	void UnloadContent();
@@ -32,15 +36,13 @@ private:
 
 
 
-	Uint32 ticks;
-	int sprite;
-
-	SDL_Rect srcrect;
-	SDL_Rect dstrect;
 
 
-	SDL_Surface* image;
-	SDL_Texture* texture;
+	SDL_Rect CurrentAnimation;
+
+
+
+
 };
 #endif
 
